@@ -4,23 +4,23 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 // We import all the components we need in our app
-import Navbar from "./components/navbar";
-import RecordList from "./components/recordList";
-import Edit from "./components/edit";
-import Create from "./components/create";
+import PageContainer from "./components/PageContainer";
+import Cashier from "./pages/Cashier";
+import Edit from "./pages/Edit";
+import Create from "./pages/Create";
+import Item from "./pages/Item";
 
 const App = () => {
   return (
-    <div>
-      <Navbar />
-      <div style={{ margin: 20 }}>
-        <Routes>
-          <Route exact path="/" element={<RecordList />} />
-          <Route path="/edit/:id" element={<Edit />} />
-          <Route path="/create" element={<Create />} />
-        </Routes>
-      </div>
-    </div>
+    <PageContainer>
+      <Routes>
+        <Route exact path="/" element={<Cashier />} />
+        <Route path="/edit/:id" element={<Edit />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/add/:id" element={<Item handleCart={setCart} />} />
+        <Route path="/cart" element={<Item />} />
+      </Routes>
+    </PageContainer>
   );
 };
 

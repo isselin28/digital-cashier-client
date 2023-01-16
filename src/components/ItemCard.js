@@ -15,7 +15,7 @@ function ItemCard(props) {
                 {item.name}
               </Heading>
               <Text pt="2" fontSize="sm">
-                Rp. {item.price}
+                Rp. {item.price} / {item.unit}
               </Text>
             </Box>
           </CardBody>

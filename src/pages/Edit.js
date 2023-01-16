@@ -20,7 +20,8 @@ import StyledFlex from "../components/StyledFlex";
 export default function Edit() {
   const [form, setForm] = useState({
     name: "",
-    price: "",
+    price: 0,
+    unit: "",
   });
   const params = useParams();
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export default function Edit() {
     const editedItem = {
       name: form.name,
       price: form.price,
+      unit: form.unit,
     };
 
     // This will send a post request to update the data in the database.
@@ -121,6 +123,16 @@ export default function Edit() {
                       }
                     />
                   </InputGroup>
+                </div>
+                <div>
+                  <FormLabel>Unit:</FormLabel>
+                  <Input
+                    bgColor="white"
+                    borderColor="#bbb"
+                    placeholder="box"
+                    value={form.unit}
+                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
+                  />
                 </div>
               </Stack>
             </CardBody>

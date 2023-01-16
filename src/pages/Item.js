@@ -17,7 +17,12 @@ import { AddIcon, MinusIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
 
 export default function Item(props) {
-  const [item, setItem] = useState({ name: "", price: "", quantity: 0 });
+  const [item, setItem] = useState({
+    name: "",
+    price: 0,
+    unit: "",
+    quantity: 0,
+  });
   const [count, setCount] = useState(0);
 
   const params = useParams();
@@ -109,7 +114,7 @@ export default function Item(props) {
                     {item.name}
                   </Heading>
                   <Text size="md" noOfLines={1} color="black">
-                    Rp. {item.price}
+                    Rp. {item.price} / {item.unit}
                   </Text>
                 </div>
                 <Spacer />
@@ -118,7 +123,7 @@ export default function Item(props) {
                 </NavLink>
               </Flex>
               <Flex>
-                <Text>Jumlah</Text>
+                <Text>Quantity</Text>
                 <Spacer />
                 <Flex gap="4" align="center">
                   <MinusIcon

@@ -21,6 +21,7 @@ export default function Create() {
   const [form, setForm] = useState({
     name: "",
     price: 0,
+    unit: "-",
   });
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export default function Create() {
       return;
     });
 
-    setForm({ name: "", price: "" });
+    setForm({ name: "", price: "", unit: "" });
     navigate("/");
   }
 
@@ -65,7 +66,7 @@ export default function Create() {
             <CardBody>
               <Stack spacing="4">
                 <div>
-                  <FormLabel>Name:</FormLabel>
+                  <FormLabel optionalIndicator>Name:</FormLabel>
                   <Input
                     bgColor="white"
                     borderColor="#bbb"
@@ -74,7 +75,7 @@ export default function Create() {
                   />
                 </div>
                 <div>
-                  <FormLabel>Price:</FormLabel>
+                  <FormLabel requiredIndicator>Price:</FormLabel>
                   <InputGroup bgColor="white" borderColor="#bbb">
                     <InputLeftAddon children="Rp." />
                     <Input
@@ -85,6 +86,15 @@ export default function Create() {
                       }
                     />
                   </InputGroup>
+                </div>
+                <div>
+                  <FormLabel requiredIndicator>Unit:</FormLabel>
+                  <Input
+                    bgColor="white"
+                    borderColor="#bbb"
+                    placeholder="box"
+                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
+                  />
                 </div>
               </Stack>
             </CardBody>

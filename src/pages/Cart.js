@@ -80,7 +80,9 @@ export default function Cart() {
                       />
                     </Flex>
                     <Flex gap="4" align="center">
-                      <div>x {item.quantity} units</div>
+                      <div>
+                        x {item.quantity} {item.unit}
+                      </div>
                       <Spacer />
                       <Box>
                         <Text size="md" noOfLines={1} color="black">

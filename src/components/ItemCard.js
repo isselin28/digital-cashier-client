@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardBody,
-  Box,
-  Text,
-  Heading,
-  Divider,
-  Stack,
-} from "@chakra-ui/react";
+import { Card, CardBody, Box, Text, Heading } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 
 function ItemCard(props) {
@@ -14,22 +6,22 @@ function ItemCard(props) {
 
   const navigate = useNavigate();
   return (
-    <Card my={4} w="100%">
-      <CardBody>
-        <Stack divider={<Divider />} spacing="2">
-          {menu.map((item) => (
+    <>
+      {menu.map((item, idx) => (
+        <Card my={1} w="100%" key={idx}>
+          <CardBody>
             <Box onClick={() => navigate(`/add/${item._id}`)}>
-              <Heading size="xs" textTransform="uppercase">
+              <Heading size="sm" textTransform="uppercase">
                 {item.name}
               </Heading>
               <Text pt="2" fontSize="sm">
                 Rp. {item.price}
               </Text>
             </Box>
-          ))}
-        </Stack>
-      </CardBody>
-    </Card>
+          </CardBody>
+        </Card>
+      ))}
+    </>
   );
 }
 

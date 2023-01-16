@@ -11,7 +11,7 @@ function StyledFlex(props) {
   }
 
   return (
-    <Flex p={4} backgroundColor="#F4F6F6" h={height} {...props}>
+    <Flex p={4} bgColor="#F4F6F6" h={height} {...props}>
       {children}
     </Flex>
   );

@@ -9,6 +9,7 @@ import Cashier from "./pages/Cashier";
 import Edit from "./pages/Edit";
 import Create from "./pages/Create";
 import Item from "./pages/Item";
+import Cart from "./pages/Cart";
 
 const App = () => {
   return (
@@ -17,8 +18,8 @@ const App = () => {
         <Route exact path="/" element={<Cashier />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
-        <Route path="/add/:id" element={<Item handleCart={setCart} />} />
-        <Route path="/cart" element={<Item />} />
+        <Route path="/add/:id" element={<Item />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </PageContainer>
   );

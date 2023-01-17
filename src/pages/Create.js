@@ -13,6 +13,8 @@ import {
   Spacer,
   Card,
   CardBody,
+  Image,
+  Box,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
@@ -22,6 +24,7 @@ export default function Create() {
     name: "",
     price: 0,
     unit: "-",
+    image: "",
   });
   const navigate = useNavigate();
 
@@ -65,6 +68,30 @@ export default function Create() {
           <Card>
             <CardBody>
               <Stack spacing="4">
+                {form.image && (
+                  <Image
+                    alt="img"
+                    borderRadius="full"
+                    boxSize="150px"
+                    src={form.image}
+                    fit="cover"
+                  />
+                )}
+                <div>
+                  <FormLabel requiredIndicator>Image:</FormLabel>
+                  <Box>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        setForm({
+                          ...form,
+                          image: URL.createObjectURL(e.target.files[0]),
+                        })
+                      }
+                    />
+                  </Box>
+                </div>
                 <div>
                   <FormLabel optionalIndicator>Name:</FormLabel>
                   <Input

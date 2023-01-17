@@ -12,16 +12,20 @@ import {
   Spacer,
   Card,
   CardBody,
+  Image,
+  Box,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import StyledFlex from "../components/StyledFlex";
+import processImageUpload from "../utils/imageUpload.utils";
 
 export default function Edit() {
   const [form, setForm] = useState({
     name: "",
     price: 0,
     unit: "",
+    image: "",
   });
   const params = useParams();
   const navigate = useNavigate();
@@ -60,6 +64,7 @@ export default function Edit() {
       name: form.name,
       price: form.price,
       unit: form.unit,
+      image: form.image,
     };
 
     // This will send a post request to update the data in the database.
@@ -83,6 +88,16 @@ export default function Edit() {
     navigate("/");
   }
 
+  const uploadImage = (e) => {
+    const callForm = (newImageData) => {
+      setForm({
+        ...form,
+        image: newImageData,
+      });
+    };
+    processImageUpload(e, callForm);
+  };
+
   // This following section will display the form that takes input from the user to update the data.
   return (
     <>
@@ -100,6 +115,23 @@ export default function Edit() {
           <Card>
             <CardBody>
               <Stack spacing="4">
+                <Image
+                  alt="img"
+                  borderRadius="full"
+                  boxSize="150px"
+                  src={form.image}
+                  fit="cover"
+                />
+                <div>
+                  <FormLabel requiredIndicator>Image:</FormLabel>
+                  <Box>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={uploadImage}
+                    />
+                  </Box>
+                </div>
                 <div>
                   <FormLabel>Name:</FormLabel>
                   <Input

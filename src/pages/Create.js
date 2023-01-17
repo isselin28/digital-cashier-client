@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
+import processImageUpload from "../utils/imageUpload.utils";
 
 function generatePlaceholder(name) {
   const colors = ["F6AD55", "68D391", "4FD1C5", "E9D8FD", "F687B3"];
@@ -68,16 +69,12 @@ export default function Create() {
 
   const isDisabled = form.name === "";
 
-  const processImageUpload = (e) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onloadend = function () {
-      const base64data = reader.result;
-      setForm({
-        ...form,
-        image: base64data,
-      });
+  const uploadImage = (e) => {
+    const callbackFunction = (newImageData) => {
+      setForm({ ...form, image: newImageData });
     };
+
+    processImageUpload(e, callbackFunction);
   };
 
   return (
@@ -109,7 +106,7 @@ export default function Create() {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={processImageUpload}
+                      onChange={uploadImage}
                     />
                   </Box>
                 </div>

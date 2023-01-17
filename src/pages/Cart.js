@@ -12,6 +12,7 @@ import {
   CardBody,
   Divider,
   Tag,
+  Image,
 } from "@chakra-ui/react";
 import { DeleteIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
@@ -69,10 +70,22 @@ export default function Cart() {
               <Card key={item._id}>
                 <CardBody>
                   <Stack divider={<Divider />} spacing="2">
-                    <Flex>
-                      <Heading size="md" noOfLines={1} color="black">
-                        {item.name}
-                      </Heading>
+                    <Flex align="center" gap="4">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        borderRadius="full"
+                        boxSize="50px"
+                        fit="cover"
+                      />
+                      <div>
+                        <Heading size="md" noOfLines={1} color="black">
+                          {item.name}
+                        </Heading>
+                        <Text size="md" noOfLines={1} color="black">
+                          Rp. {item.price}
+                        </Text>
+                      </div>
                       <Spacer />
                       <DeleteIcon
                         color="red.500"

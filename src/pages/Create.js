@@ -16,9 +16,9 @@ import {
   Image,
   Box,
 } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, DeleteIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
-import processImageUpload from "../utils/imageUpload.utils";
+import processImageUpload, { isPlaceholder } from "../utils/imageUpload.utils";
 import generatePlaceholder from "../utils/generatePlaceholder";
 
 export default function Create() {
@@ -69,6 +69,8 @@ export default function Create() {
     processImageUpload(e, callbackFunction);
   };
 
+  const hasImage = isPlaceholder(form.image);
+
   return (
     <>
       <StyledFlex header>
@@ -95,11 +97,28 @@ export default function Create() {
                 <div>
                   <FormLabel requiredIndicator>Image:</FormLabel>
                   <Box>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={uploadImage}
-                    />
+                    {hasImage ? (
+                      <Button
+                        leftIcon={<DeleteIcon />}
+                        colorScheme="red"
+                        variant="solid"
+                        size="sm"
+                        onClick={() =>
+                          setForm({
+                            ...form,
+                            image: generatePlaceholder(form.name),
+                          })
+                        }
+                      >
+                        Remove Image
+                      </Button>
+                    ) : (
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={uploadImage}
+                      />
+                    )}
                   </Box>
                 </div>
                 <div>

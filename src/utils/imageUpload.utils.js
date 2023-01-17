@@ -6,3 +6,7 @@ export default function processImageUpload(e, callbackFunction) {
     callbackFunction(base64data);
   };
 }
+
+export function isPlaceholder(image) {
+  return image.includes("https");
+}

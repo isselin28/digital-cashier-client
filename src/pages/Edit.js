@@ -13,12 +13,12 @@ import {
   Card,
   CardBody,
   Image,
-  Box,
 } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, DeleteIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import StyledFlex from "../components/StyledFlex";
-import processImageUpload from "../utils/imageUpload.utils";
+import processImageUpload, { isPlaceholder } from "../utils/imageUpload.utils";
+import generatePlaceholder from "../utils/generatePlaceholder";
 
 export default function Edit() {
   const [form, setForm] = useState({
@@ -55,8 +55,6 @@ export default function Edit() {
 
     return;
   }, [params.id]);
-
-  console.log("form", form);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -98,6 +96,8 @@ export default function Edit() {
     processImageUpload(e, callForm);
   };
 
+  const hasImage = isPlaceholder(form.image);
+
   // This following section will display the form that takes input from the user to update the data.
   return (
     <>
@@ -122,15 +122,31 @@ export default function Edit() {
                   src={form.image}
                   fit="cover"
                 />
+
                 <div>
                   <FormLabel requiredIndicator>Image:</FormLabel>
-                  <Box>
+                  {hasImage ? (
+                    <Button
+                      leftIcon={<DeleteIcon />}
+                      colorScheme="red"
+                      variant="solid"
+                      size="sm"
+                      onClick={() =>
+                        setForm({
+                          ...form,
+                          image: generatePlaceholder(form.name),
+                        })
+                      }
+                    >
+                      Remove Image
+                    </Button>
+                  ) : (
                     <input
                       type="file"
                       accept="image/*"
                       onChange={uploadImage}
                     />
-                  </Box>
+                  )}
                 </div>
                 <div>
                   <FormLabel>Name:</FormLabel>

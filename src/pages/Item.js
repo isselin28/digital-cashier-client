@@ -14,8 +14,9 @@ import {
   Tag,
   Image,
 } from "@chakra-ui/react";
-import { AddIcon, MinusIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
+import CountBar from "../components/CountBar";
 
 export default function Item(props) {
   const [item, setItem] = useState({
@@ -85,16 +86,6 @@ export default function Item(props) {
     return;
   }, [params.id]);
 
-  const handleCount = (action) => {
-    if (action === "increase") {
-      setCount(count + 1);
-    }
-
-    if (action === "decrease" && count > 0) {
-      setCount(count - 1);
-    }
-  };
-
   return (
     <>
       <StyledFlex header>
@@ -136,17 +127,7 @@ export default function Item(props) {
               <Flex>
                 <Text>Quantity</Text>
                 <Spacer />
-                <Flex gap="4" align="center">
-                  <MinusIcon
-                    boxSize={3}
-                    onClick={() => handleCount("decrease")}
-                  />
-                  <div>{count}</div>
-                  <AddIcon
-                    boxSize={3}
-                    onClick={() => handleCount("increase")}
-                  />
-                </Flex>
+                <CountBar getCount={setCount} />
               </Flex>
             </Stack>
           </CardBody>

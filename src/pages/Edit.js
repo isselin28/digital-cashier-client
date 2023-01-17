@@ -96,7 +96,7 @@ export default function Edit() {
     processImageUpload(e, callForm);
   };
 
-  const hasImage = isPlaceholder(form.image);
+  const hasImage = !isPlaceholder(form.image);
 
   // This following section will display the form that takes input from the user to update the data.
   return (

@@ -69,7 +69,7 @@ export default function Create() {
     processImageUpload(e, callbackFunction);
   };
 
-  const hasImage = isPlaceholder(form.image);
+  const hasImage = !isPlaceholder(form.image);
 
   return (
     <>

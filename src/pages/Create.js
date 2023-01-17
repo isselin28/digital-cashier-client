@@ -19,15 +19,7 @@ import {
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
 import processImageUpload from "../utils/imageUpload.utils";
-
-function generatePlaceholder(name) {
-  const colors = ["F6AD55", "68D391", "4FD1C5", "E9D8FD", "F687B3"];
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-  const itemInitial = name[0]?.toUpperCase() || "A";
-  const placeholderURL = `https://via.placeholder.com/150/${randomColor}/FFFFFF/?text=${itemInitial}`;
-
-  return placeholderURL;
-}
+import generatePlaceholder from "../utils/generatePlaceholder";
 
 export default function Create() {
   const [form, setForm] = useState({

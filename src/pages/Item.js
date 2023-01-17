@@ -12,6 +12,7 @@ import {
   CardBody,
   Divider,
   Tag,
+  Image,
 } from "@chakra-ui/react";
 import { AddIcon, MinusIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
@@ -22,6 +23,7 @@ export default function Item(props) {
     price: 0,
     unit: "",
     quantity: 0,
+    image: "",
   });
   const [count, setCount] = useState(0);
 
@@ -109,14 +111,23 @@ export default function Item(props) {
           <CardBody>
             <Stack divider={<Divider />} spacing="2">
               <Flex>
-                <div>
-                  <Heading size="md" noOfLines={1} color="black">
-                    {item.name}
-                  </Heading>
-                  <Text size="md" noOfLines={1} color="black">
-                    Rp. {item.price} / {item.unit}
-                  </Text>
-                </div>
+                <Flex gap="4" align="center">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    borderRadius="full"
+                    fit="cover"
+                    boxSize="60px"
+                  />
+                  <div>
+                    <Heading size="md" noOfLines={1} color="black">
+                      {item.name}
+                    </Heading>
+                    <Text size="md" noOfLines={1} color="black">
+                      Rp. {item.price} / {item.unit}
+                    </Text>
+                  </div>
+                </Flex>
                 <Spacer />
                 <NavLink className="nav-link" to={`/edit/${params.id}`}>
                   <EditIcon boxSize={6} />

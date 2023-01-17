@@ -19,6 +19,15 @@ import {
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
 
+function generatePlaceholder(name) {
+  const colors = ["F6AD55", "68D391", "4FD1C5", "E9D8FD", "F687B3"];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  const itemInitial = name[0]?.toUpperCase() || "A";
+  const placeholderURL = `https://via.placeholder.com/150/${randomColor}/FFFFFF/?text=${itemInitial}`;
+
+  return placeholderURL;
+}
+
 export default function Create() {
   const [form, setForm] = useState({
     name: "",
@@ -26,14 +35,21 @@ export default function Create() {
     unit: "-",
     image: "",
   });
+
   const navigate = useNavigate();
+  const placeholderURL = generatePlaceholder(form.name);
 
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
 
-    // When a post request is sent to the create url, we'll add a new record to the database.
     const newItem = { ...form };
+
+    if (form.image === "") {
+      newItem.image = placeholderURL;
+    }
+
+    // When a post request is sent to the create url, we'll add a new record to the database.
 
     await fetch("http://localhost:5000/storage/add", {
       method: "POST",
@@ -46,11 +62,23 @@ export default function Create() {
       return;
     });
 
-    setForm({ name: "", price: "", unit: "" });
+    setForm({ name: "", price: "", unit: "", image: "" });
     navigate("/");
   }
 
   const isDisabled = form.name === "";
+
+  const processImageUpload = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = function () {
+      const base64data = reader.result;
+      setForm({
+        ...form,
+        image: base64data,
+      });
+    };
+  };
 
   return (
     <>
@@ -67,28 +95,21 @@ export default function Create() {
         <FormControl isRequired>
           <Card>
             <CardBody>
+              <Image
+                alt="img"
+                borderRadius="full"
+                boxSize="150px"
+                src={form.image || placeholderURL}
+                fit="cover"
+              />
               <Stack spacing="4">
-                {form.image && (
-                  <Image
-                    alt="img"
-                    borderRadius="full"
-                    boxSize="150px"
-                    src={form.image}
-                    fit="cover"
-                  />
-                )}
                 <div>
                   <FormLabel requiredIndicator>Image:</FormLabel>
                   <Box>
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          image: URL.createObjectURL(e.target.files[0]),
-                        })
-                      }
+                      onChange={processImageUpload}
                     />
                   </Box>
                 </div>

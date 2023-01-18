@@ -64,7 +64,7 @@ export default function Item(props) {
     async function fetchData() {
       const id = params.id.toString();
       const response = await fetch(
-        `${process.env.PROD_API_BASE_URL}/storage/${id}`
+        `${process.env.REACT_APP_PROD_API}/storage/${id}`
       );
 
       if (!response.ok) {

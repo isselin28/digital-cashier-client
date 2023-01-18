@@ -34,7 +34,7 @@ export default function Edit() {
     async function fetchData() {
       const id = params.id.toString();
       const response = await fetch(
-        `${process.env.PROD_API_BASE_URL}/storage/${id}`
+        `${process.env.REACT_APP_PROD_API}/storage/${id}`
       );
 
       if (!response.ok) {
@@ -68,7 +68,7 @@ export default function Edit() {
     };
 
     // This will send a post request to update the data in the database.
-    await fetch(`${process.env.PROD_API_BASE_URL}/update/${params.id}`, {
+    await fetch(`${process.env.REACT_APP_PROD_API}/update/${params.id}`, {
       method: "POST",
       body: JSON.stringify(editedItem),
       headers: {
@@ -81,7 +81,7 @@ export default function Edit() {
 
   // This method will delete a record
   async function onDelete(id) {
-    await fetch(`${process.env.PROD_API_BASE_URL}/${id}`, {
+    await fetch(`${process.env.REACT_APP_PROD_API}/${id}`, {
       method: "DELETE",
     });
 

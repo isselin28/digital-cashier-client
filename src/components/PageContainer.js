@@ -4,7 +4,7 @@ function PageContainer(props) {
   const { children } = props;
   return (
     <Box w="100%" h="100vh" minW="400px" m={0}>
-      <Box>{children}</Box>
+      <Box h="100vh">{children}</Box>
     </Box>
   );
 }

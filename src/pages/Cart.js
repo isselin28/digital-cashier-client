@@ -30,16 +30,22 @@ export default function Cart() {
 
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
+
+    let newCart = [];
+    if (cartState) {
+      cartState.forEach((item) => newCart.push(item));
+    }
+
     setCart(cartState);
 
-    if (cart) {
+    if (!emptyCart) {
       const total = cart.reduce(
         (total, item) => total + item.price * item.quantity,
         0
       );
       setTotalPrice(total);
     }
-  }, [cart]);
+  }, []);
 
   const removeItem = (id) => {
     const itemIndex = cart.findIndex((item) => item._id === id);

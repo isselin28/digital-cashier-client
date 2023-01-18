@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import {
@@ -89,7 +89,7 @@ export default function Create() {
               <Image
                 alt="img"
                 borderRadius="full"
-                boxSize="150px"
+                boxSize="136px"
                 src={form.image || placeholderURL}
                 fit="cover"
               />

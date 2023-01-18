@@ -13,6 +13,8 @@ import {
   Divider,
   Tag,
   Image,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import StyledFlex from "../components/StyledFlex";
@@ -27,6 +29,7 @@ export default function Item(props) {
     image: "",
   });
   const [count, setCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -80,6 +83,8 @@ export default function Item(props) {
         return;
       }
 
+      if (response.ok && dataItem) setIsLoaded(true);
+
       setItem(dataItem);
     }
 
@@ -103,8 +108,8 @@ export default function Item(props) {
         <Card>
           <CardBody>
             <Stack divider={<Divider />} spacing="2">
-              <Flex>
-                <Flex gap="4" align="center">
+              <Flex direction="row" gap="4" align="center">
+                <SkeletonCircle size="60px" isLoaded={isLoaded}>
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -112,15 +117,20 @@ export default function Item(props) {
                     fit="cover"
                     boxSize="60px"
                   />
-                  <div>
-                    <Heading size="md" noOfLines={1} color="black">
-                      {item.name}
-                    </Heading>
-                    <Text size="md" noOfLines={1} color="black">
-                      Rp. {item.price} / {item.unit}
-                    </Text>
-                  </div>
-                </Flex>
+                </SkeletonCircle>
+                <SkeletonText
+                  isLoaded={isLoaded}
+                  noOfLines={2}
+                  spacing="2"
+                  skeletonHeight="4"
+                >
+                  <Heading size="md" noOfLines={1} color="black">
+                    {item.name}
+                  </Heading>
+                  <Text size="md" noOfLines={1} color="black">
+                    Rp. {item.price} / {item.unit}
+                  </Text>
+                </SkeletonText>
                 <Spacer />
                 <NavLink className="nav-link" to={`/edit/${params.id}`}>
                   <EditIcon boxSize={6} />

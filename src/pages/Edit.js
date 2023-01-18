@@ -13,6 +13,7 @@ import {
   Card,
   CardBody,
   Image,
+  SkeletonCircle,
 } from "@chakra-ui/react";
 import { ArrowBackIcon, DeleteIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
@@ -117,14 +118,15 @@ export default function Edit() {
           <Card>
             <CardBody>
               <Stack spacing="4">
-                <Image
-                  alt="img"
-                  borderRadius="full"
-                  boxSize="150px"
-                  src={form.image}
-                  fit="cover"
-                />
-
+                <SkeletonCircle isLoaded={form.image !== ""} size="136px">
+                  <Image
+                    alt="img"
+                    borderRadius="full"
+                    boxSize="136px"
+                    src={form.image}
+                    fit="cover"
+                  />
+                </SkeletonCircle>
                 <div>
                   <FormLabel requiredIndicator>Image:</FormLabel>
                   {hasImage ? (

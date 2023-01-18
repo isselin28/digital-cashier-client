@@ -22,7 +22,7 @@ export default function Cart() {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const emptyCart = cart.length === 0;
+  const emptyCart = !cart || cart?.length === 0;
 
   const onSubmit = () => {
     // submit printer

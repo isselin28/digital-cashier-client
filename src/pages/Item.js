@@ -63,7 +63,9 @@ export default function Item(props) {
   useEffect(() => {
     async function fetchData() {
       const id = params.id.toString();
-      const response = await fetch(`http://localhost:5000/storage/${id}`);
+      const response = await fetch(
+        `${process.env.PROD_API_BASE_URL}/storage/${id}`
+      );
 
       if (!response.ok) {
         const message = `An error has occured: ${response.statusText}`;

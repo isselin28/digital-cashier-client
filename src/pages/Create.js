@@ -44,7 +44,7 @@ export default function Create() {
 
     // When a post request is sent to the create url, we'll add a new record to the database.
 
-    await fetch("http://localhost:5000/storage/add", {
+    await fetch(`${process.env.PROD_API_BASE_URL}/storage/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

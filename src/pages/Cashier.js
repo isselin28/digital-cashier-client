@@ -17,7 +17,7 @@ function Cashier() {
   // This method fetches the items from the database.
   useEffect(() => {
     async function getItems() {
-      const response = await fetch(`http://localhost:5000/storage/`);
+      const response = await fetch(`${process.env.PROD_API_BASE_URL}/storage/`);
 
       if (!response.ok) {
         const message = `An error occured: ${response.statusText}`;

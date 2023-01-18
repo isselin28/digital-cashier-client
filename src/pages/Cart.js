@@ -110,9 +110,11 @@ export default function Cart() {
           })}
 
         {!emptyCart && (
-          <Heading size="md" noOfLines={1} color="black" my={4} align="right">
-            Total: Rp. {totalPrice}
-          </Heading>
+          <Card px={4}>
+            <Heading size="md" noOfLines={1} color="black" my={4} align="right">
+              Total: Rp. {totalPrice}
+            </Heading>
+          </Card>
         )}
       </StyledFlex>
       <StyledFlex footer>

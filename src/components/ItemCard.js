@@ -16,7 +16,12 @@ function ItemCard(props) {
   return (
     <>
       {menu.map((item, idx) => (
-        <Card my={1} w="100%" key={idx}>
+        <Card
+          my={1}
+          w="100%"
+          key={idx}
+          onClick={() => navigate(`/add/${item._id}`)}
+        >
           <CardBody>
             <Flex align="center" gap={4}>
               <Image
@@ -26,7 +31,7 @@ function ItemCard(props) {
                 boxSize="64px"
                 fit="cover"
               />
-              <Box onClick={() => navigate(`/add/${item._id}`)}>
+              <Box>
                 <Heading size="sm" textTransform="uppercase">
                   {item.name}
                 </Heading>

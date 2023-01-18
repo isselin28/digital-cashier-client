@@ -18,10 +18,10 @@ export default function CountBar({ getCount }) {
   getCount(count);
 
   return (
-    <Flex gap="4" align="center">
-      <MinusIcon boxSize={3} onClick={() => handleCount("decrease")} />
+    <Flex gap="5" align="center">
+      <MinusIcon boxSize={4} onClick={() => handleCount("decrease")} />
       <div>{count}</div>
-      <AddIcon boxSize={3} onClick={() => handleCount("increase")} />
+      <AddIcon boxSize={4} onClick={() => handleCount("increase")} />
     </Flex>
   );
 }

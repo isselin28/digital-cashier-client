@@ -89,6 +89,7 @@ export default function Cart() {
                       <Spacer />
                       <DeleteIcon
                         color="red.500"
+                        boxSize={5}
                         onClick={() => removeItem(item._id)}
                       />
                     </Flex>

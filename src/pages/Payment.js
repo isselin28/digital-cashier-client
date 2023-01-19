@@ -21,6 +21,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import StyledFlex from "../components/StyledFlex";
 import RadioCard from "../components/RadioCard";
+import createPrintData from "../utils/createPrintData";
 
 function Payment() {
   const [items, setItems] = useState([]);
@@ -74,6 +75,11 @@ function Payment() {
   });
 
   const group = getRootProps();
+
+  const onSubmit = () => {
+    const timeStamp = new Date();
+    createPrintData(cart, total, payMethod, cashReceived, timeStamp);
+  };
 
   return (
     <>
@@ -132,7 +138,7 @@ function Payment() {
         )}
       </StyledFlex>
       <StyledFlex footer align="center">
-        <Button colorScheme="green" flex="1" onClick={() => navigate("/cart")}>
+        <Button colorScheme="green" flex="1" onClick={onSubmit}>
           Print Receipt
         </Button>
       </StyledFlex>

@@ -1,16 +1,15 @@
 const colors = [
-  "F6AD55",
-  "F6E05E",
-  "68D391",
-  "4FD1C5",
-  "76E4F7",
-  "9DECF9",
-  "F687B3",
+  "F6AD55", // orange
+  "68D391", // green
+  "4FD1C5", // teal
+  "E9D8FD", // purple
+  "F687B3", // pink
 ];
-const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-export default function generatePlaceholder(name) {
-  const itemInitial = name[0]?.toUpperCase() || "A";
+export default function generatePlaceholder(letter) {
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+  const itemInitial = letter?.toUpperCase() || "A";
   const placeholderURL = `https://via.placeholder.com/150/${randomColor}/FFFFFF/?text=${itemInitial}`;
 
   return placeholderURL;

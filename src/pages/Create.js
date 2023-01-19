@@ -22,6 +22,7 @@ import processImageUpload, { isPlaceholder } from "../utils/imageUpload.utils";
 import generatePlaceholder from "../utils/generatePlaceholder";
 
 export default function Create() {
+  const [placeholderURL, setPlaceholderURL] = useState("");
   const [form, setForm] = useState({
     name: "",
     price: 0,
@@ -30,7 +31,12 @@ export default function Create() {
   });
 
   const navigate = useNavigate();
-  const placeholderURL = generatePlaceholder(form.name);
+
+  const firstLetter = form.name[0];
+
+  useEffect(() => {
+    setPlaceholderURL(generatePlaceholder(firstLetter));
+  }, []);
 
   // This function will handle the submission.
   async function onSubmit(e) {
@@ -106,7 +112,7 @@ export default function Create() {
                         onClick={() =>
                           setForm({
                             ...form,
-                            image: generatePlaceholder(form.name),
+                            image: placeholderURL,
                           })
                         }
                       >

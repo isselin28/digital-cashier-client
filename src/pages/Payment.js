@@ -128,9 +128,12 @@ function Payment() {
           flex="1"
           onClick={() => createPrintData(cart, total)}
         >
-          {/* <a href="intent:data_to_print#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;"> */}
           Print Receipt
-          {/* </a> */}
+        </Button>
+        <Button colorScheme="green" flex="1">
+          <a href="rawbt:url:base64,aHR0cHM6Ly93d3cuYmFzZTY0ZW5jb2RlLm9yZy8=">
+            url 64
+          </a>
         </Button>
       </StyledFlex>
     </>

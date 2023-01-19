@@ -34,7 +34,7 @@ export default function Cart() {
   }, []);
 
   const calcTotal = useCallback((cart) => {
-    const total = cart.reduce(
+    const total = cart?.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );

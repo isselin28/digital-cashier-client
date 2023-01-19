@@ -29,15 +29,10 @@ export default function Cart() {
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
 
-    let newCart = [];
-    if (cartState) {
-      cartState.forEach((item) => newCart.push(item));
-    }
-
     setCart(cartState);
 
-    if (!emptyCart) {
-      const total = cart.reduce(
+    if (cartState) {
+      const total = cartState.reduce(
         (total, item) => total + item.price * item.quantity,
         0
       );

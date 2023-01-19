@@ -116,7 +116,7 @@ function Payment() {
                 <InputLeftAddon children="Rp." />
                 <Input
                   type="number"
-                  placeholder="150000"
+                  placeholder="0"
                   onChange={(e) => setCashReceived(e.target.value)}
                 />
               </InputGroup>

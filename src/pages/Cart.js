@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   Stack,
   Button,
@@ -23,10 +24,7 @@ export default function Cart() {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const emptyCart = !cart || cart?.length === 0;
-
-  const onSubmit = () => {
-    // submit printer
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
@@ -125,8 +123,13 @@ export default function Cart() {
         )}
       </StyledFlex>
       <StyledFlex footer>
-        <Button onClick={onSubmit} colorScheme="green" flex="1">
-          Print Receipt
+        <Button
+          onClick={() => navigate("/payment")}
+          colorScheme="green"
+          flex="1"
+          disabled={emptyCart}
+        >
+          Payment
         </Button>
       </StyledFlex>
     </>

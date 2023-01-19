@@ -22,6 +22,7 @@ import { NavLink } from "react-router-dom";
 import StyledFlex from "../components/StyledFlex";
 import RadioCard from "../components/RadioCard";
 import createPrintData from "../utils/createPrintData";
+import base64 from "../utils/base64.json";
 
 function Payment() {
   const [cart, setCart] = useState([]);
@@ -61,6 +62,8 @@ function Payment() {
   });
 
   const group = getRootProps();
+
+  const link = `rawbt:data:image/jpeg;base64${base64.data}`;
 
   return (
     <>
@@ -131,9 +134,7 @@ function Payment() {
           Print Receipt
         </Button>
         <Button colorScheme="green" flex="1">
-          <a href="rawbt:url:base64,aHR0cHM6Ly93d3cuYmFzZTY0ZW5jb2RlLm9yZy8=">
-            url 64
-          </a>
+          <a href={link}> Print picture </a>
         </Button>
       </StyledFlex>
     </>

@@ -131,10 +131,10 @@ function Payment() {
           flex="1"
           onClick={() => createPrintData(cart, total)}
         >
-          Print Receipt
+          Print data
         </Button>
         <Button colorScheme="green" flex="1">
-          <a href={link}> Print picture </a>
+          <a href={link}> Print link </a>
         </Button>
       </StyledFlex>
     </>

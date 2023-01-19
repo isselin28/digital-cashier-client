@@ -58,5 +58,5 @@ function print(data) {
   var P = "package=ru.a402d.rawbtprinter;end;";
   const base64 = "rawbt:url:base64,aHR0cHM6Ly93d3cuYmFzZTY0ZW5jb2RlLm9yZy8=";
   var textEncoded = encodeURI(data);
-  window.location.href = "intent:" + "PGRpdj5IZWxsb3chPC9kaXY+" + S + P;
+  window.location.href = "intent:" + base64data.data + S + P;
 }

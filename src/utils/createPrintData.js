@@ -12,13 +12,13 @@ const double = esc + "!" + "\x38"; //Emphasized + Double-height + Double-width m
 
 function printDetails() {
   const data = {
-    title: "LOTEK KALIPAH APO",
+    title: "LOTEK KALIPAHAPO",
     address: "JL. BATANGHARI NO.21, JAKARTA",
-    time: "",
+    time: new Date(),
   };
 
   const title = double + data.title + newline;
-  const address = initChar + data.address + newline + newline;
+  const address = initChar + data.address + newline;
 
   const allDetails = init + title + address;
 
@@ -31,11 +31,16 @@ function printItemList(cart) {
     const priceL = String(item.price).length;
     const qtyL = String(item.quantity).length;
 
-    const firstLine = `${item.name}` + space.repeat(maxChar - nameL) + newline;
+    const totalPerItem = item.price * item.quantity;
+    const totalPerItemL = String(totalPerItem).length;
+
+    const firstLine = item.name + space.repeat(maxChar - nameL) + newline;
     const secondLine =
       `${item.quantity}x` +
-      space.repeat(maxChar - qtyL - priceL - 1) +
+      space +
       item.price +
+      space.repeat(maxChar - qtyL - 2 - priceL - totalPerItemL) +
+      totalPerItem +
       newline;
 
     return firstLine + secondLine;

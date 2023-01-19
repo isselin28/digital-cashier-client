@@ -44,7 +44,7 @@ function Payment() {
     setTotal(total);
 
     const formatCashReceived = Number(cashReceived);
-    if (formatCashReceived < total) {
+    if (formatCashReceived === 0) {
       setChange(0);
     } else {
       setChange(formatCashReceived - total);
@@ -66,9 +66,12 @@ function Payment() {
   const onSubmit = () => {
     const timeStamp = new Date();
     createPrintData(cart, total, payMethod, cashReceived, timeStamp);
-    localStorage.remove("cart");
     navigate("/");
+    localStorage.removeItem("cart");
   };
+
+  const disabledBtn =
+    payMethod === "" || (payMethod === "cash" && !cashReceived);
 
   return (
     <>
@@ -114,12 +117,15 @@ function Payment() {
                 <Input
                   type="number"
                   placeholder="150000"
-                  pattern="[0-9]*"
                   onChange={(e) => setCashReceived(e.target.value)}
                 />
               </InputGroup>
               <FormLabel pt="4">Change:</FormLabel>
-              <Heading as="h4" size="md">
+              <Heading
+                as="h4"
+                size="md"
+                color={change >= 0 ? "green.400" : "red.600"}
+              >
                 Rp. {change}
               </Heading>
             </CardBody>
@@ -127,7 +133,12 @@ function Payment() {
         )}
       </StyledFlex>
       <StyledFlex footer align="center">
-        <Button colorScheme="green" flex="1" onClick={onSubmit}>
+        <Button
+          colorScheme="green"
+          flex="1"
+          onClick={onSubmit}
+          disabled={disabledBtn}
+        >
           Print Receipt
         </Button>
       </StyledFlex>

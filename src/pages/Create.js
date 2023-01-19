@@ -32,10 +32,8 @@ export default function Create() {
 
   const navigate = useNavigate();
 
-  const firstLetter = form.name[0];
-
   useEffect(() => {
-    setPlaceholderURL(generatePlaceholder(firstLetter));
+    setPlaceholderURL(generatePlaceholder(form.name));
   }, []);
 
   // This function will handle the submission.

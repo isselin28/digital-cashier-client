@@ -6,10 +6,10 @@ const colors = [
   "F687B3", // pink
 ];
 
-export default function generatePlaceholder(letter) {
+export default function generatePlaceholder(name) {
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-  const itemInitial = letter?.toUpperCase() || "A";
+  const itemInitial = name[0]?.toUpperCase() || "A";
   const placeholderURL = `https://via.placeholder.com/150/${randomColor}/FFFFFF/?text=${itemInitial}`;
 
   return placeholderURL;

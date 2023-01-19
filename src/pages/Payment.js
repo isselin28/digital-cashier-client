@@ -63,7 +63,10 @@ function Payment() {
 
   const group = getRootProps();
 
-  const link = `rawbt:data:text/html;base64,${base64.data}`;
+  const onSubmit = () => {
+    const timeStamp = new Date();
+    createPrintData(cart, total, payMethod, cashReceived, timeStamp);
+  };
 
   return (
     <>
@@ -126,15 +129,8 @@ function Payment() {
         )}
       </StyledFlex>
       <StyledFlex footer align="center">
-        <Button
-          colorScheme="green"
-          flex="1"
-          onClick={() => createPrintData(cart, total, payMethod, cashReceived)}
-        >
-          Print data
-        </Button>
-        <Button colorScheme="green" flex="1">
-          <a href={link}> Print link </a>
+        <Button colorScheme="green" flex="1" onClick={onSubmit}>
+          Print Receipt
         </Button>
       </StyledFlex>
     </>

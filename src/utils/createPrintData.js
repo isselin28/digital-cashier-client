@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+
+// notation for printer
 const maxChar = 30; // max length of receipt
 const esc = "\x1B"; //ESC byte in hex notation
 const newline = "\x0A"; //LF byte in hex notation
@@ -10,17 +13,20 @@ const initChar = esc + "!" + "\x00"; //Character font A selected (ESC ! 0)
 const single = esc + "!" + "\x18"; //Emphasized + Double-height mode selected (ESC ! (16 + 8)) 24 dec => 18 hex
 const double = esc + "!" + "\x38"; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
 
-function printDetails() {
+function printDetails(timeStamp) {
   const data = {
     title: "LOTEK KALIPAHAPO",
     address: "JL. BATANGHARI NO.21, JAKARTA",
-    time: new Date(),
+    date: format(timeStamp, "EEE,dd/MM/yyyy"),
+    time: format(timeStamp, "p"),
   };
 
   const title = double + data.title + newline;
-  const address = initChar + data.address + newline;
+  const address = initChar + data.address + newline + newline;
+  const date = "Date:" + space + data.date + newline;
+  const time = "Time:" + space + data.time + newline;
 
-  const allDetails = init + title + address;
+  const allDetails = init + title + address + date + time;
 
   return allDetails + divider;
 }
@@ -88,10 +94,16 @@ function printFooter() {
   return footer;
 }
 
-export default function createPrintData(cart, total, payMethod, cashReceived) {
+export default function createPrintData(
+  cart,
+  total,
+  payMethod,
+  cashReceived,
+  timeStamp
+) {
   let result;
 
-  const details = printDetails();
+  const details = printDetails(timeStamp);
   const itemList = printItemList(cart);
   const totalResult = printTotal(total);
   const payment = printPayment(payMethod, total, cashReceived);

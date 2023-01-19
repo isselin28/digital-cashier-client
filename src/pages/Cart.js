@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import {
@@ -28,21 +28,25 @@ export default function Cart() {
 
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
-
     setCart(cartState);
 
-    if (cartState) {
-      const total = cartState.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      setTotalPrice(total);
-    }
+    calcTotal(cartState);
+  }, []);
+
+  const calcTotal = useCallback((cart) => {
+    const total = cart.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    setTotalPrice(total);
   }, []);
 
   const removeItem = (id) => {
     const itemIndex = cart.findIndex((item) => item._id === id);
     cart.splice(itemIndex, 1);
+
+    setCart(cart);
+    calcTotal(cart);
 
     localStorage.setItem("cart", JSON.stringify(cart));
   };

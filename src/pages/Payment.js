@@ -129,7 +129,7 @@ function Payment() {
         <Button
           colorScheme="green"
           flex="1"
-          onClick={() => createPrintData(cart, total)}
+          onClick={() => createPrintData(cart, total, payMethod, cashReceived)}
         >
           Print data
         </Button>

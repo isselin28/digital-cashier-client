@@ -1,63 +1,108 @@
-import base64data from "./base64.json";
-export default function createPrintData(cart, total) {
-  console.log("cart", cart);
-  console.log("total", total);
+const maxChar = 30; // max length of receipt
+const esc = "\x1B"; //ESC byte in hex notation
+const newline = "\x0A"; //LF byte in hex notation
+const space = " ";
+const dash = "-";
+const divider = dash.repeat(maxChar) + newline;
 
-  let result;
+const init = esc + "@"; //Initializes the printer (ESC @)
+const initChar = esc + "!" + "\x00"; //Character font A selected (ESC ! 0)
+const single = esc + "!" + "\x18"; //Emphasized + Double-height mode selected (ESC ! (16 + 8)) 24 dec => 18 hex
+const double = esc + "!" + "\x38"; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
 
-  const esc = "\x1B"; //ESC byte in hex notation
-  const newline = "\x0A"; //LF byte in hex notation
-  const space = " ";
+function printDetails() {
+  const data = {
+    title: "LOTEK KALIPAH APO",
+    address: "JL. BATANGHARI NO.21, JAKARTA",
+    time: "",
+  };
 
-  const init = esc + "@";
-  const title = esc + "!" + "\x38" + "LOTEK KALIPAH APO";
-  const address = esc + "!" + "\x00" + "JL. BATANGHARI NO.21, JAKARTA";
-  // newline newline
+  const title = double + data.title + newline;
+  const address = initChar + data.address + newline + newline;
 
-  const maxChar = 30;
+  const allDetails = init + title + address;
+
+  return allDetails + divider;
+}
+
+function printItemList(cart) {
   const itemList = cart.map((item) => {
     const nameL = item.name.length;
     const priceL = String(item.price).length;
-    const spaceL = maxChar - nameL - priceL;
+    const qtyL = String(item.quantity).length;
 
-    const spacing = space.repeat(spaceL);
+    const firstLine = `${item.name}` + space.repeat(maxChar - nameL) + newline;
+    const secondLine =
+      `${item.quantity}x` +
+      space.repeat(maxChar - qtyL - priceL - 1) +
+      item.price +
+      newline;
 
-    return `${item.name}${spacing}${item.price}` + newline;
+    return firstLine + secondLine;
   });
 
-  console.log("itemList", itemList);
+  const allItems = itemList.join("");
 
-  result = itemList.join(" ");
+  return allItems + divider;
+}
+
+function printTotal(total) {
+  const totalL = String(total).length;
+  const totalLine = "Total" + space.repeat(maxChar - 5 - totalL) + total;
+
+  return totalLine + newline + divider;
+}
+
+function printPayment(payMethod, total, cashReceived) {
+  const payMethodL = payMethod.length;
+  const methodLine =
+    "Payment" + space.repeat(maxChar - 7 - payMethodL) + payMethod + newline;
+
+  const cashReceivedL = String(cashReceived).length;
+  const cashTendLine =
+    "Cash Paid" +
+    space.repeat(maxChar - 9 - cashReceivedL) +
+    cashReceived +
+    newline;
+
+  const change = cashReceived - total;
+  const changeL = String(change).length;
+  const changeLine =
+    "Change" + space.repeat(maxChar - 6 - changeL) + change + newline;
+
+  if (payMethod === "cash" && cashReceived > 0) {
+    return methodLine + cashTendLine + changeLine + divider + newline;
+  }
+
+  return methodLine + divider + newline;
+}
+
+function printFooter() {
+  const footer = "Thank You !";
+
+  return footer;
+}
+
+export default function createPrintData(cart, total, payMethod, cashReceived) {
+  let result;
+
+  const details = printDetails();
+  const itemList = printItemList(cart);
+  const totalResult = printTotal(total);
+  const payment = printPayment(payMethod, total, cashReceived);
+  const footer = printFooter();
+
+  result =
+    details +
+    itemList +
+    totalResult +
+    payment +
+    single +
+    footer +
+    newline +
+    newline;
 
   console.log("result", result);
-
-  let cmds = esc + "@"; //Initializes the printer (ESC @)
-
-  cmds += esc + "!" + "\x38"; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
-  cmds += "LOTEK KALIPAH APO"; //text to print
-  cmds += newline + newline;
-  cmds += esc + "!" + "\x00"; //Character font A selected (ESC ! 0)
-  cmds += `COOKIES                   5.00`;
-  cmds += newline;
-  cmds += "MILK 65 Fl oz             3.78";
-  cmds += newline + newline;
-  cmds += "SUBTOTAL                  8.78";
-  cmds += newline;
-  cmds += "TAX 5%                    0.44";
-  cmds += newline;
-  cmds += "TOTAL                     9.22";
-  cmds += newline;
-  cmds += "CASH TEND                10.00";
-  cmds += newline;
-  cmds += "CASH DUE                  0.78";
-  cmds += newline + newline;
-  cmds += esc + "!" + "\x18"; //Emphasized + Double-height mode selected (ESC ! (16 + 8)) 24 dec => 18 hex
-  cmds += "# ITEMS SOLD 2";
-  cmds += esc + "!" + "\x00"; //Character font A selected (ESC ! 0)
-  cmds += newline + newline;
-  cmds += "11/03/13  19:53:17";
-
-  console.log(cmds);
 
   print(result);
 }

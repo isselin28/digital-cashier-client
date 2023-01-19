@@ -3,6 +3,7 @@ export default function processImageUpload(e, callbackFunction) {
   reader.readAsDataURL(e.target.files[0]);
   reader.onloadend = function () {
     const base64data = reader.result;
+    console.log("base64data", base64data);
     callbackFunction(base64data);
   };
 }

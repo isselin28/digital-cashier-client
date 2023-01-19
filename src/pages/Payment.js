@@ -23,7 +23,6 @@ import StyledFlex from "../components/StyledFlex";
 import RadioCard from "../components/RadioCard";
 
 function Payment() {
-  const [items, setItems] = useState([]);
   const [payMethod, setPayMethod] = useState("");
   const [total, setTotal] = useState(0);
   const [cashReceived, setCashReceived] = useState(0);
@@ -34,28 +33,12 @@ function Payment() {
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
 
-    async function getItems() {
-      const response = await fetch(
-        `${process.env.REACT_APP_PROD_API}/storage/`
-      );
-
-      if (!response.ok) {
-        const message = `An error occured: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-
-      const items = await response.json();
-      setItems(items);
-    }
-
     const total = cartState.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
 
     setTotal(total);
-    getItems();
 
     const formatCashReceived = Number(cashReceived);
     if (formatCashReceived === 0) {

@@ -24,7 +24,7 @@ import RadioCard from "../components/RadioCard";
 import createPrintData from "../utils/createPrintData";
 
 function Payment() {
-  const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
   const [payMethod, setPayMethod] = useState("");
   const [total, setTotal] = useState(0);
   const [cashReceived, setCashReceived] = useState(0);
@@ -34,19 +34,7 @@ function Payment() {
   // This method fetches the items from the database.
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("cart"));
-
-    async function getItems() {
-      const response = await fetch(`http://localhost:5000/storage/`);
-
-      if (!response.ok) {
-        const message = `An error occured: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-
-      const items = await response.json();
-      setItems(items);
-    }
+    setCart(cartState);
 
     const total = cartState.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -54,7 +42,6 @@ function Payment() {
     );
 
     setTotal(total);
-    getItems();
 
     const formatCashReceived = Number(cashReceived);
     if (formatCashReceived < total) {
@@ -64,7 +51,7 @@ function Payment() {
     }
 
     return;
-  }, [items.length, cashReceived]);
+  }, [cashReceived]);
 
   const methods = ["cash", "qris", "credit card", "bank transfer"];
 
@@ -79,6 +66,8 @@ function Payment() {
   const onSubmit = () => {
     const timeStamp = new Date();
     createPrintData(cart, total, payMethod, cashReceived, timeStamp);
+    localStorage.remove("cart");
+    navigate("/");
   };
 
   return (

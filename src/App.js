@@ -10,6 +10,7 @@ import Edit from "./pages/Edit";
 import Create from "./pages/Create";
 import Item from "./pages/Item";
 import Cart from "./pages/Cart";
+import Payment from "./pages/Payment";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/add/:id" element={<Item />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </PageContainer>
   );

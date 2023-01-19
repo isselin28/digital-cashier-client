@@ -63,7 +63,7 @@ function Payment() {
 
   const group = getRootProps();
 
-  const link = `rawbt:data:text/html;base64,PGRpdj5IZWxsb3chPC9kaXY+`;
+  const link = `rawbt:data:text/html;base64,${base64.data}`;
 
   return (
     <>
